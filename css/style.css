@@ -242,13 +242,25 @@ body {
 }
 
 .status-alert-banner.visiting-active {
-  background-color: var(--color-status-active-bg);
-  color: var(--color-status-active-text);
+  background-color: #E2F2E4;
+  color: #1A592A;
+  border: 1px solid #C4E5C7;
 }
 
-.status-alert-banner.visiting-restricted {
-  background-color: var(--color-status-rest-bg);
-  color: var(--color-status-rest-text);
+.status-alert-banner.visiting-active .status-dot {
+  background-color: #2E7D32;
+}
+
+.status-alert-banner.visiting-restricted,
+.status-alert-banner.rest-time {
+  background-color: #FEECEB;
+  color: #C5221F;
+  border: 1px solid #F8B4B4;
+}
+
+.status-alert-banner.visiting-restricted .status-dot,
+.status-alert-banner.rest-time .status-dot {
+  background-color: #D93025;
 }
 
 .status-badge-indicator {
@@ -267,14 +279,21 @@ body {
 }
 
 .status-info-btn {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.85);
   border: none;
   color: inherit;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  text-decoration: underline;
+  text-decoration: none;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
   cursor: pointer;
   font-family: var(--font-hero);
+  transition: var(--transition-fast);
+}
+
+.status-info-btn:hover {
+  background: #FFFFFF;
 }
 
 /* App Scroll Container */
@@ -756,6 +775,11 @@ body {
   padding: 4px 10px;
   border-radius: var(--radius-pill);
   white-space: nowrap;
+}
+
+.spot-badge-tag.restricted {
+  background: #FEECEB;
+  color: #C5221F;
 }
 
 .spot-etiquette-box {

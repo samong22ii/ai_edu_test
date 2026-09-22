@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
       visitingStatusBanner.className = 'status-alert-banner visiting-active';
       visitingStatusText.innerHTML = `<strong>Visiting Active (10:00 - 17:00)</strong> • Please whisper in alleys`;
     } else {
-      visitingStatusBanner.className = 'status-alert-banner rest-time';
+      visitingStatusBanner.className = 'status-alert-banner rest-time visiting-restricted';
       visitingStatusText.innerHTML = `<strong>Residential Rest Time (17:00 - 10:00)</strong> • Bukchon residential alleys restricted`;
     }
   }
@@ -305,7 +305,9 @@ document.addEventListener('DOMContentLoaded', () => {
     drawerCategory.textContent = place.categoryLabel || place.type;
     drawerNameEn.textContent = place.name;
     drawerNameKr.textContent = place.nameKr;
-    drawerBadge.textContent = place.badge || (place.isRestrictedZone ? 'Restricted Zone' : 'Open');
+    const isRestricted = place.isRestrictedZone || place.badge === 'Restricted Hours';
+    drawerBadge.textContent = place.badge || (isRestricted ? 'Restricted Zone' : 'Open');
+    drawerBadge.className = isRestricted ? 'spot-badge-tag restricted' : 'spot-badge-tag';
     
     let extraMeta = '';
     if (place.tel) extraMeta += ` • 📞 ${place.tel}`;
