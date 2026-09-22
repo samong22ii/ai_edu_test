@@ -172,13 +172,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   renderEssentialApps();
 
-  whyAppsLink.addEventListener('click', () => {
-    openFlashcardModal(
-      "왜 한국에서는 구글맵 대신 네이버지도를 써야 하나요?",
-      "Wae han-guk-e-seo-neun naver-ji-do-reul sseo-ya ha-na-yo?",
-      "Due to South Korean National Security & Spatial Information laws, Google Maps cannot export high-precision vector walking data. Naver Map provides 100% accurate subway, bus, and alley walking paths in English."
-    );
-  });
+  if (whyAppsLink) {
+    whyAppsLink.addEventListener('click', () => {
+      openFlashcardModal(
+        "왜 한국에서는 구글맵 대신 네이버지도를 써야 하나요?",
+        "Wae han-guk-e-seo-neun naver-ji-do-reul sseo-ya ha-na-yo?",
+        "Due to South Korean National Security & Spatial Information laws, Google Maps cannot export high-precision vector walking data. Naver Map provides 100% accurate subway, bus, and alley walking paths in English."
+      );
+    });
+  }
 
   // =========================================================================
   // 3. Interactive Leaflet Map & Facilities

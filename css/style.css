@@ -424,22 +424,32 @@ body {
   line-height: 1.25;
 }
 
-.section-action-link {
-  font-family: var(--font-hero);
-  font-size: 0.74rem;
-  color: var(--color-brand-primary);
-  text-decoration: none;
-  font-weight: 800;
-  cursor: pointer;
-  background: var(--color-bg-card-tint);
-  padding: 4px 12px;
-  border-radius: var(--radius-pill);
-  transition: var(--transition-fast);
+.section-action-link,
+#whyAppsLink {
+  display: none !important;
 }
 
-.section-action-link:hover {
-  background: var(--color-bg-muted-hover);
-  color: var(--color-brand-primary-hover);
+/* ESSENTIALS Header Full Width & Single Line Title */
+#appsSection .section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+#appsSection .section-title-wrap {
+  width: 100%;
+}
+
+#appsSection .section-eyebrow {
+  margin-bottom: 4px;
+}
+
+#appsSection .section-title {
+  white-space: nowrap;
+  width: 100%;
+  font-size: clamp(1.15rem, 4.8vw, 1.25rem);
 }
 
 /* =========================================================
