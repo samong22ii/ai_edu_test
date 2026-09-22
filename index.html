@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="SeoBuk ON - Bukchon & Seochon Sustainable Travel Companion. Essential Korean apps, official public restrooms, trash bins, tourism spots, and resident etiquette.">
+  <meta name="theme-color" content="#F8F9FA">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <title>SeoBuk ON | Bukchon & Seochon Travel Companion</title>
+
+  <!-- Typography: Pretendard & Roboto (M3 System Fonts) -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Desktop Presentation Wrapper -->
+  <div class="app-viewport-wrapper">
+
+    <!-- Desktop Simulation Controls -->
+    <header class="desktop-controls-bar" aria-label="Desktop Simulation Bar">
+      <div class="desktop-brand">
+        <span class="desktop-brand-title">SeoBuk ON</span>
+        <span class="desktop-brand-badge">Mobile Preview</span>
+      </div>
+      <div class="sim-btn-group">
+        <button class="sim-btn active" id="simRealTime" title="Current device time">Real-Time</button>
+        <button class="sim-btn" id="simDaytime" title="14:00 (Open)">Day (14:00)</button>
+        <button class="sim-btn" id="simNighttime" title="20:00 (Rest)">Night (20:00)</button>
+      </div>
+    </header>
+
+    <!-- Main Mobile Phone Frame -->
+    <main class="mobile-app-frame" id="appFrame">
+
+      <!-- Simulated Mobile Status Bar -->
+      <div class="mobile-status-bar">
+        <span id="statusBarClock">09:41</span>
+        <div class="status-bar-notch"></div>
+        <div class="status-icons">
+          <span>5G</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+
+      <!-- Visiting Hours & Red Zone Status Banner -->
+      <aside class="status-alert-banner visiting-active" id="visitingStatusBanner" aria-live="polite">
+        <div class="status-badge-indicator">
+          <span class="status-dot"></span>
+          <span id="visitingStatusText">Visiting Hours Active (10:00 - 17:00)</span>
+        </div>
+        <button class="status-info-btn" id="visitingInfoBtn" aria-label="Learn about visiting hours policy">Rules ℹ️</button>
+      </aside>
+
+      <!-- Scrollable Main Content -->
+      <div class="app-content-scroll" id="mainScroll">
+
+        <!-- Hero Welcome Banner -->
+        <section class="hero-banner" id="heroSection">
+          <img src="assets/images/bukchon.jpg" alt="Bukchon Hanok Village" class="hero-img">
+          <div class="hero-gradient"></div>
+          <div class="hero-content">
+            <span class="hero-tag">Bukchon & Seochon</span>
+            <h1 class="hero-title">Wander Gently, Experience Deeply</h1>
+            <p class="hero-subtitle">600 years of living heritage in quiet harmony with local residents.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 1: Essential Korean Apps -->
+        <section class="section-container" id="appsSection">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <span class="section-eyebrow">Essentials</span>
+              <h2 class="section-title">5 Must-Have Apps in Korea</h2>
+            </div>
+            <span class="section-action-link" id="whyAppsLink">Why Not Google Maps?</span>
+          </div>
+
+          <!-- Apps Horizontal Carousel -->
+          <div class="apps-carousel" id="appsCarouselContainer">
+            <!-- Dynamically populated from data.js -->
+          </div>
+        </section>
+
+        <!-- SECTION 2: Interactive Map & Convenience Facilities -->
+        <section class="section-container" id="mapSection">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <span class="section-eyebrow">Interactive Map</span>
+              <h2 class="section-title">Bukchon & Seochon Live Map</h2>
+            </div>
+          </div>
+
+          <div class="map-widget-container">
+            <!-- Seoul Open Data Plaza Live Status Bar -->
+            <div class="map-datasource-bar">
+              <div class="datasource-badge">
+                <span class="live-dot"></span>
+                <span id="datasourceStatusText">Seoul Open Data • Jongno Official Public Data</span>
+              </div>
+              <button class="btn-api-config" id="openApiModalBtn" title="Seoul Open Data Plaza API Configuration">
+                <span>⚙️</span> API Config
+              </button>
+            </div>
+
+            <!-- Map Filter Pills (M3 Filter Chips) -->
+            <div class="map-filter-scroller" id="mapFilterPills" role="tablist">
+              <button class="filter-pill active" data-filter="all" id="pillAll" role="tab" aria-selected="true">⭐ All</button>
+              <button class="filter-pill" data-filter="tourism" id="pillTourism" role="tab" aria-selected="false">🏛️ Attractions (25)</button>
+              <button class="filter-pill" data-filter="restroom" id="pillRestroom" role="tab" aria-selected="false">🚾 Restrooms (22)</button>
+              <button class="filter-pill" data-filter="trash_bin" id="pillTrash" role="tab" aria-selected="false">🗑️ Trash Bins (20)</button>
+              <button class="filter-pill" data-filter="craft" id="pillCraft" role="tab" aria-selected="false">🏮 Craft & Culture</button>
+            </div>
+
+            <!-- Leaflet Map Container -->
+            <div id="travelMap" aria-label="Interactive Map of Bukchon and Seochon"></div>
+
+            <!-- Active Spot Detail Drawer -->
+            <div class="spot-detail-drawer" id="spotDrawer">
+              <div class="spot-detail-header">
+                <div class="spot-title-area">
+                  <span class="spot-tag-category" id="drawerCategory">Heritage Hanok</span>
+                  <h3 class="spot-name-en" id="drawerNameEn">Bukchon Hanok Village (Alley 5 & 6)</h3>
+                  <span class="spot-name-kr" id="drawerNameKr">북촌 한옥마을 (가회동 31번지 골목길)</span>
+                </div>
+                <span class="spot-badge-tag" id="drawerBadge">Restricted Hours</span>
+              </div>
+
+              <div class="spot-etiquette-box" id="drawerEtiquette">
+                🤫 <strong>Resident Courtesy:</strong> Over 6,000 residents live here. Please speak in soft whispers under 40dB.
+              </div>
+
+              <div class="spot-actions-row">
+                <button class="btn-spot-action primary" id="drawerNavBtn">
+                  Open in Naver Map
+                </button>
+                <button class="btn-spot-action secondary" id="drawerTaxiCardBtn">
+                  Show to Taxi
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: AI Mood Spotlight -->
+        <section class="section-container" id="aiSection">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <span class="section-eyebrow">AI Curation</span>
+              <h2 class="section-title">Spotlight for Your Mood</h2>
+            </div>
+          </div>
+
+          <div class="ai-section-box">
+            <div class="ai-header-bar">
+              <div class="ai-badge">
+                <span>✨</span> Curated Route
+              </div>
+              <span class="ai-mood-hint">Choose your mood:</span>
+            </div>
+
+            <!-- Mood Selector Chips -->
+            <div class="mood-chips-container" id="moodChipsGroup">
+              <button class="mood-chip active" data-mood="peaceful-alley">🌿 Peaceful Walk</button>
+              <button class="mood-chip" data-mood="traditional-tea">🍵 Artisan Tea</button>
+              <button class="mood-chip" data-mood="artisan-craft">🎨 Folk Craft</button>
+              <button class="mood-chip" data-mood="literary-history">📖 Literature & Art</button>
+              <button class="mood-chip" data-mood="local-food">🥢 Brass-Coin Bites</button>
+            </div>
+
+            <!-- The Single Dynamic AI Card -->
+            <div class="ai-single-card" id="aiSpotlightCard">
+              <div class="ai-card-tagline" id="aiCardTagline">
+                <span>🌿</span> #PeacefulAlley • Bukchon East
+              </div>
+              <div>
+                <h3 class="ai-card-title-en" id="aiCardTitleEn">Wonseo-dong Palace Stone Wall Alley</h3>
+                <span class="ai-card-title-kr" id="aiCardTitleKr">원서동 창덕궁 돌담길 & 빨래터</span>
+              </div>
+              <p class="ai-card-story" id="aiCardStory">
+                While central Bukchon alleys get crowded, Wonseo-dong hugs the western stone wall of Changdeokgung Palace in total serenity. You'll hear gentle breezes rustling bamboo leaves over warm brick boundaries.
+              </p>
+              <div class="ai-card-tip" id="aiCardTip">
+                🤫 <strong>Respect Tip:</strong> Locals cultivate modest flower pots along stone steps. Walk quietly and enjoy ambient bird songs.
+              </div>
+              <div class="ai-card-action-bar">
+                <button class="btn-spot-action primary" id="aiCardNavBtn">
+                  Navigate (Naver Map)
+                </button>
+                <button class="btn-spot-action secondary" id="aiCardDriverBtn">
+                  Show Driver
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: Resident Etiquette & Pledge -->
+        <section class="section-container" id="etiquetteSection">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <span class="section-eyebrow">Local Harmony</span>
+              <h2 class="section-title">Respecting Our Neighborhood</h2>
+            </div>
+          </div>
+
+          <div class="etiquette-grid" id="etiquetteGridContainer">
+            <!-- Dynamically populated from data.js -->
+          </div>
+
+          <!-- Sustainable Traveler Pledge Box -->
+          <div class="pledge-banner-box">
+            <div class="pledge-stamp-badge" id="pledgeStampBadge" aria-hidden="true">
+              🤝
+            </div>
+            <h3 class="pledge-title" id="pledgeTitle">Take the Kind Traveler Pledge</h3>
+            <p class="pledge-desc" id="pledgeDesc">
+              I promise to whisper in residential alleys, pack out my trash, and honor visiting hours (10:00 - 17:00).
+            </p>
+            <button class="btn-pledge-action" id="takePledgeBtn">
+              Sign the Pledge & Earn Stamp
+            </button>
+          </div>
+        </section>
+
+        <!-- SECTION 5: Driver & Local Communication Cards -->
+        <section class="section-container" id="phrasesSection">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <span class="section-eyebrow">Language Bridge</span>
+              <h2 class="section-title">Show to Taxi Driver / Local</h2>
+            </div>
+          </div>
+
+          <!-- Language Bridge Category Filter Pills -->
+          <div class="phrase-filter-scroller" id="phraseFilterPills" role="tablist" aria-label="Language Bridge Filter">
+            <button class="phrase-filter-pill active" data-filter="all" role="tab" aria-selected="true">⭐ All</button>
+            <button class="phrase-filter-pill" data-filter="tourism" role="tab" aria-selected="false">🏛️ Attractions</button>
+            <button class="phrase-filter-pill" data-filter="restroom" role="tab" aria-selected="false">🚾 Restrooms</button>
+            <button class="phrase-filter-pill" data-filter="trash" role="tab" aria-selected="false">🗑️ Trash Bins</button>
+            <button class="phrase-filter-pill" data-filter="etiquette" role="tab" aria-selected="false">🤫 Etiquette</button>
+          </div>
+
+          <div class="phrase-card-list" id="phraseCardsContainer">
+            <!-- Dynamically populated from data.js -->
+          </div>
+        </section>
+
+      </div><!-- /.app-content-scroll -->
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
+        <button class="nav-tab-item active" data-target="heroSection" aria-label="Home">
+          <span class="nav-tab-icon">🏠</span>
+          <span>Home</span>
+        </button>
+        <button class="nav-tab-item" data-target="appsSection" aria-label="Apps">
+          <span class="nav-tab-icon">📱</span>
+          <span>Apps</span>
+        </button>
+        <button class="nav-tab-item" data-target="mapSection" aria-label="Map">
+          <span class="nav-tab-icon">🗺️</span>
+          <span>Map & Info</span>
+        </button>
+        <button class="nav-tab-item" data-target="aiSection" aria-label="AI Spotlight">
+          <span class="nav-tab-icon">✨</span>
+          <span>AI Spot</span>
+        </button>
+        <button class="nav-tab-item" data-target="etiquetteSection" aria-label="Etiquette">
+          <span class="nav-tab-icon">🤝</span>
+          <span>Pledge</span>
+        </button>
+      </nav>
+
+      <!-- App Toast Notification -->
+      <div class="app-toast" id="appToast" role="alert">Address copied to clipboard!</div>
+
+      <!-- Full-Screen Flashcard Modal for Driver/Locals -->
+      <div class="modal-overlay" id="flashcardModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="flashcard-modal-content">
+          <div class="flashcard-header">
+            <span>🚕</span> <span id="modalTitle">Show This to Taxi Driver</span>
+          </div>
+          <div class="flashcard-big-kr" id="modalKoreanText">
+            북촌 한옥마을 입구로 가주세요.
+          </div>
+          <div class="flashcard-phonetic" id="modalPhonetic">
+            Buk-chon ha-nok-ma-eul ip-gu-ro ga-ju-se-yo.
+          </div>
+          <div class="flashcard-en-meaning" id="modalEnglishMeaning">
+            Please take me to the entrance of Bukchon Hanok Village.
+          </div>
+          <div class="flashcard-modal-actions">
+            <button class="btn-modal-speak" id="modalSpeakBtn">
+              <span>🔊</span> Pronounce (Korean)
+            </button>
+            <button class="btn-modal-close" id="modalCloseBtn">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seoul Open Data API Settings Modal -->
+      <div class="modal-overlay" id="apiSettingsModal" role="dialog" aria-modal="true" aria-labelledby="apiModalTitle">
+        <div class="api-modal-content">
+          <div class="api-modal-header">
+            <div class="api-modal-title-wrap">
+              <span class="api-modal-icon">🏛️</span>
+              <div>
+                <h3 id="apiModalTitle" class="api-modal-title">서울시 열린데이터 광장 API 설정</h3>
+                <span class="api-modal-subtitle">종로구 관광지 · 공중화장실 · 가로휴지통 공공데이터</span>
+              </div>
+            </div>
+            <button class="btn-close-modal" id="closeApiModalBtn" aria-label="닫기">✕</button>
+          </div>
+          <div class="api-modal-body">
+            <div class="api-info-card">
+              <span class="info-icon">💡</span>
+              <p class="api-info-text">
+                서울시 열린데이터광장 공식 데이터 기반으로 <strong>종로구 관광지 25선(영문)</strong>, <strong>공중화장실 22개소</strong>, <strong>가로휴지통 20개소</strong> 실제 데이터가 연동되어 있습니다.
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="seoulApiKeyInput" class="form-label">서울 열린데이터광장 일반 인증키 (API Key)</label>
+              <input type="text" id="seoulApiKeyInput" placeholder="인증키 입력 (예: 7457786445...)" class="api-key-input">
+              <span class="form-hint">* 발급받으신 인증키가 없어도 종로구 공식 실제 데이터가 100% 정상 작동합니다.</span>
+            </div>
+            <div class="api-sync-status" id="apiSyncStatusMessage" style="display: none;"></div>
+          </div>
+          <div class="api-modal-footer">
+            <button class="btn-api-action outline" id="saveApiKeyBtn">인증키 저장</button>
+            <button class="btn-api-action primary" id="syncLiveApiBtn">🔄 실시간 API 동기화</button>
+          </div>
+        </div>
+      </div>
+
+    </main><!-- /.mobile-app-frame -->
+
+  </div><!-- /.app-viewport-wrapper -->
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

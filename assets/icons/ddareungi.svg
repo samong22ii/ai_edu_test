@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#00A651"/>
+  <circle cx="60" cy="60" r="44" fill="#008C44"/>
+  <!-- Front Wheel -->
+  <circle cx="80" cy="70" r="14" fill="none" stroke="#FFFFFF" stroke-width="4.5"/>
+  <circle cx="80" cy="70" r="3" fill="#FFFFFF"/>
+  <!-- Rear Wheel -->
+  <circle cx="40" cy="70" r="14" fill="none" stroke="#FFFFFF" stroke-width="4.5"/>
+  <circle cx="40" cy="70" r="3" fill="#FFFFFF"/>
+  <!-- Bike Frame -->
+  <path d="M40 70 L54 52 L72 52 L80 70" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M54 52 L57 70 L80 70" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Seat post & Seat -->
+  <path d="M57 70 L51 44 M45 44 L57 44" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- Handlebars -->
+  <path d="M72 52 L70 38 M64 38 L76 38" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- Bell / Sound Wave -->
+  <path d="M74 30 Q78 28 82 32" fill="none" stroke="#FFE500" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M78 24 Q84 22 90 28" fill="none" stroke="#FFE500" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

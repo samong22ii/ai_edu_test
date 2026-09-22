@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#FF385C"/>
+  <!-- White circular plate 'C' -->
+  <path d="M82 40 C74 29 61 25 48 27 C33 30 23 43 23 59 C23 75 34 88 50 90 C63 92 75 87 82 77" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+  <!-- Fork Silhouette in center -->
+  <path d="M54 42 L54 62 M48 42 L48 52 C48 56 60 56 60 52 L60 42" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <line x1="54" y1="62" x2="54" y2="74" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+</svg>

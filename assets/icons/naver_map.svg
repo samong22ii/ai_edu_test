@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#03C75A"/>
+  <!-- Map Paper Base with soft drop shadow -->
+  <g filter="url(#nmShadow)">
+    <!-- Fold 1 (Left) -->
+    <path d="M26 42 L46 32 L46 84 L26 94 Z" fill="#F8FAFC"/>
+    <!-- Fold 2 (Center - shaded) -->
+    <path d="M46 32 L74 42 L74 94 L46 84 Z" fill="#E2E8F0"/>
+    <!-- Fold 3 (Right) -->
+    <path d="M74 42 L94 32 L94 84 L74 94 Z" fill="#F8FAFC"/>
+  </g>
+  <!-- Map routes on paper -->
+  <path d="M30 65 Q50 55 70 70 T90 55" fill="none" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
+  <!-- Naver Location Pin -->
+  <path d="M60 22 C49 22 40 31 40 42 C40 56 60 78 60 78 C60 78 80 56 80 42 C80 31 71 22 60 22 Z" fill="#03C75A"/>
+  <circle cx="60" cy="42" r="9" fill="#FFFFFF"/>
+  <circle cx="60" cy="42" r="4.5" fill="#03C75A"/>
+  <defs>
+    <filter id="nmShadow" x="20" y="28" width="80" height="74" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+</svg>
