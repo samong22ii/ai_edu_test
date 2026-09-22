@@ -556,32 +556,35 @@ body {
   font-size: 0.74rem;
   color: var(--color-text-body);
   line-height: 1.45;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   border: none !important;
 }
 
 .app-links-row {
   display: flex;
+  flex-direction: column;
   gap: 8px;
+  width: 100%;
   margin-top: auto;
 }
 
 /* App Store Pill Buttons (Borderless, Clean Filled Style) */
 .app-store-btn {
-  flex: 1;
-  padding: 9px 12px;
+  width: 100%;
+  padding: 10px 14px;
   border-radius: var(--radius-pill);
   background: var(--color-bg-card-tint);
   color: var(--color-text-title);
   font-family: var(--font-hero);
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 700;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   border: none;
+  white-space: nowrap;
   transition: var(--transition-fast);
 }
 
