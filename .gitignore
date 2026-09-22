@@ -7,3 +7,7 @@ desktop.ini
 .vscode/
 .idea/
 *.log
+
+# Local Dev Server (Do not deploy to Vercel static CDN)
+server.js
+
